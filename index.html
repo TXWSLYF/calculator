@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+        }
+
+        #container {
+            margin: 20px auto;
+            width: 400px;
+            padding-bottom: 0.1px;
+            border-radius: 10px;
+            background-color: #fadfbe;
+        }
+
+        .header {
+            font-family: "Comic Sans MS", sans-serif;
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            color: #59575d;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        #text {
+            display: block;
+            margin: 10px auto;
+            width: 350px;
+            height: 30px;
+            background-color: aquamarine;
+            border: 1px solid darkkhaki;
+            border-radius: 5px;
+            text-align: right;
+        }
+
+        #buttonBox {
+            width: 350px;
+            margin: 15px auto;
+        }
+
+        .row {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            height: 40px;
+            width: 70px;
+            border: rosybrown 2px solid;
+            border-radius: 5px;
+            float: left;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:active {
+            position: relative;
+            top: 2px;
+        }
+
+        .row button {
+            margin-right: 23.333px;
+        }
+
+        .row button:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="header">Calculator</div>
+    <input type="text" id="text" readonly>
+    <div id="buttonBox">
+        <div class="row">
+            <button id="AC" value="AC">AC</button>
+            <button id="CE" value="CE">CE</button>
+            <button id="%" value="%" class="input">%</button>
+            <button id="/" value="/" class="input">/</button>
+        </div>
+        <div class="row">
+            <button id="7" value="7" class="input">7</button>
+            <button id="8" value="8" class="input">8</button>
+            <button id="9" value="9" class="input">9</button>
+            <button id="*" value="*" class="input">*</button>
+        </div>
+        <div class="row">
+            <button id="4" value="4" class="input">4</button>
+            <button id="5" value="5" class="input">5</button>
+            <button id="6" value="6" class="input">6</button>
+            <button id="-" value="-" class="input">-</button>
+        </div>
+        <div class="row">
+            <button id="1" value="1" class="input">1</button>
+            <button id="2" value="2" class="input">2</button>
+            <button id="3" value="3" class="input">3</button>
+            <button id="+" value="+" class="input">+</button>
+        </div>
+        <div class="row">
+            <button id="." value="." class="input">.</button>
+            <button id="0" value="0" class="input">0</button>
+            <button id="Ans" value="Ans">Ans</button>
+            <button id="=" value="=">=</button>
+        </div>
+    </div>
+</div>
+<script src="jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        var equation = '';            //用来存储输入的算式
+        var lastAns = '';
+        var $show = $('#text');
+        $('#buttonBox').on('click', function (event) {
+            if ($(event.target).hasClass('input')) {
+                equation += event.target.value;
+                $show.val(equation);
+            }
+            if ($(event.target).attr('id') === 'AC') {
+                equation = '';
+                $show.val(equation);
+            }
+            if ($(event.target).attr('id') === 'CE') {
+                equation = equation.slice(0, equation.length - 1);
+                $show.val(equation);
+            }
+            if ($(event.target).attr('id') === '=') {
+                try {
+                    equation = eval(equation).toString();
+                    lastAns = equation;
+                }
+                catch (error) {
+                }
+                finally {
+                    $show.val(equation);
+                }
+            }
+            if ($(event.target).attr('id') === 'Ans') {
+                equation = lastAns;
+                $show.val(lastAns);
+            }
+        });
+    })
+</script>
+</body>
+</html>
